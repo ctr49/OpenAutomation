@@ -18,6 +18,8 @@ require 'class.iCalReader.php';
 ReadCalendar('xxxxxxxxxxxxxxxxxxxxxxxxxx@group.calendar.google.com', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', 7, '1'); 	# Blau - xxxx ersetzen
 ReadCalendar('yyyyyyyyyyyyyyyyyyyyyyyyyy@group.calendar.google.com', 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy', 7, '3'); 	# Rot - yyyy ersetzen
 ReadCalendar('rr7mkkascn405ksj67ttoh524aioaijm@import.calendar.google.com', '', 7, '5'); 	# Feiertage Sachsen
+// Beispiel fuer frei verfuergbaren iCal Kalender ausserhalb von Google:
+// ReadCalendar('http://i.cal.to/ical/661/aktionstagegedenktage/umstellung-sommer-winterzeit/a0ea7dbe.88ed4c6b-5d78d8f4.ics', '', 14, '5');    # Zeitumstellung
 
 //Hier die Farbe für die ShortCuts angeben
 $SC_Farbe[1] = "#6E6E6E"; # grau
@@ -63,8 +65,9 @@ function DateCompare($a, $b) {
 function ReadCalendar($userid, $magicCookie, $maxDays, $shortCut) {
     global $calcData;
    
-    if ($magicCookie != '') {$feedURL = "https://www.google.com/calendar/ical/$userid/private-$magicCookie/basic.ics";}
-    else                     $feedURL = "https://www.google.com/calendar/ical/$userid/public/basic.ics";
+    if (substr($userid, 0, 4) === "http")     $feedURL = $userid;
+    elseif ($magicCookie != '') {$feedURL = "https://www.google.com/calendar/ical/$userid/private-$magicCookie/basic.ics";}
+    else                         $feedURL = "https://www.google.com/calendar/ical/$userid/public/basic.ics";
 
     $date = "";
 
@@ -166,11 +169,11 @@ function SetEintrag($thisData)
     if($thisData['DatumTxt'] == date("d.m.Y"))
 
     {
-        return "<span style='font-weight:normal;font-size:".$StyleText[5].";text-decoration:".$deco.";;color:".$SC_Farbe[$thisData['shortCut']]."'>".$thisData['Bezeichnung']."&nbsp;&nbsp;".$thisData['ZeitTxt']."</span>";
+        return "<span style='font-weight:normal;font-size:".$StyleText[5].";text-decoration:".$deco.";;color:".$SC_Farbe[$thisData['shortCut']]."'>".str_replace("\\", "", $thisData['Bezeichnung'])."&nbsp;&nbsp;".$thisData['ZeitTxt']."</span>";
     }
     else
     {
-        return "<span style='font-weight:normal;font-size:".$StyleText[5].";color:".$SC_Farbe[$thisData['shortCut']]."'>".$thisData['Bezeichnung']."&nbsp;&nbsp;".$thisData['ZeitTxt']."</span>";
+        return "<span style='font-weight:normal;font-size:".$StyleText[5].";color:".$SC_Farbe[$thisData['shortCut']]."'>".str_replace("\\", "", $thisData['Bezeichnung'])."&nbsp;&nbsp;".$thisData['ZeitTxt']."</span>";
     }
 
 }

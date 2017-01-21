@@ -1,9 +1,9 @@
 # GoogleCalendar Helper for CometVisu
 
-This is a simple helper for displaying Google Calendar events in CometVisu.
+This is a simple helper for displaying generic iCal and Google Calendar events in CometVisu.
 It's composed of two parts:
 - an iCal reader php class to parse an ics file
-- a php script (that also holds the private calendar URL) fetching iCal calendar from Google, calling the parser class and nicely format the content CometVisu-friendly
+- a php script (that also holds the private calendar URL) fetching iCal calendar, calling the parser class and nicely format the content CometVisu-friendly
 
 ## Requirements
 
@@ -13,8 +13,12 @@ The assumption is that you already have a working CometVisu, served by a web ser
 Copy the php files into a web-browsable and php-executable directory on this web server. If you use any subdirectories you will have to specify it in the URL later.
 
 ## Configuration
+Google Calendar:
 1. Fetch your private Google Calendar URL: ![alt text](https://raw.githubusercontent.com/OpenAutomationProject/OpenAutomation/master/GoogleCalendarHelper/image_46687.jpg "copy link")
 2. Adjust configuration in googlecalendar_ical_parser.php header (use link(s) fetched in step 1)
+
+Generic iCal feed:
+1. Just put the link to the ics file as first parameter. Second parameter stays empty, third (days in advance to display) and fourth (color formatting) can be used exactly like described for Google Calendar
 
 ## Usage
 
